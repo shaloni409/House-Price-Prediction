@@ -1,60 +1,73 @@
-<!DOCTYPE html>Add commentMore actions
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Boston Housing Price Prediction</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h2>Boston Housing Price Prediction</h2>
-    <form action="/predict" method="post">
+    <div class="container">
+        <h2>Boston Housing Price Prediction</h2>
+        <form action="/predict" method="post" id="predictionForm">
 
-        <label>CRIM:</label><br>
-        <input type="text" name="CRIM"><br>
+            <label title="Per capita crime rate by town">CRIM:</label>
+            <input type="number" name="CRIM" step="any" placeholder="Enter CRIM" required>
 
-        <label>ZN:</label><br>
-        <input type="text" name="ZN"><br>
+            <label title="Proportion of residential land zoned for lots over 25,000 sq.ft.">ZN:</label>
+            <input type="number" name="ZN" step="any" placeholder="Enter ZN" required>
 
-        <label>INDUS:</label><br>
-        <input type="text" name="INDUS"><br>
+            <label title="Proportion of non-retail business acres per town">INDUS:</label>
+            <input type="number" name="INDUS" step="any" placeholder="Enter INDUS" required>
 
-        <label>CHAS:</label><br>
-        <input type="text" name="CHAS"><br>
+            <label title="Charles River dummy variable (1 if tract bounds river; 0 otherwise)">CHAS:</label>
+            <input type="number" name="CHAS" min="0" max="1" placeholder="0 or 1" required>
 
-        <label>NOX:</label><br>
-        <input type="text" name="NOX"><br>
+            <label title="Nitric oxides concentration (parts per 10 million)">NOX:</label>
+            <input type="number" name="NOX" step="any" placeholder="Enter NOX" required>
 
-        <label>RM:</label><br>
-        <input type="text" name="RM"><br>
+            <label>RM (Average rooms per dwelling): <span id="rmValue">6</span></label>
+            <input type="range" name="RM" min="1" max="10" step="0.1" value="6" oninput="rmValue.innerText = this.value" required>
 
-        <label>AGE:</label><br>
-        <input type="text" name="AGE"><br>
+            <label>AGE (Proportion of owner-occupied units built prior to 1940):</label>
+            <input type="number" name="AGE" step="any" placeholder="Enter AGE" required>
 
-        <label>DIS:</label><br>
-        <input type="text" name="DIS"><br>
+            <label>DIS (Weighted distances to five Boston employment centres):</label>
+            <input type="number" name="DIS" step="any" placeholder="Enter DIS" required>
 
-        <label>RAD:</label><br>
-        <input type="text" name="RAD"><br>
+            <label>RAD (Index of accessibility to radial highways):</label>
+            <input type="number" name="RAD" placeholder="Enter RAD" required>
 
-        <label>TAX:</label><br>
-        <input type="text" name="TAX"><br>
+            <label>TAX (Full-value property-tax rate per $10,000):</label>
+            <input type="number" name="TAX" placeholder="Enter TAX" required>
 
-        <label>PTRATIO:</label><br>
-        <input type="text" name="PTRATIO"><br>
+            <label>PTRATIO (Pupil-teacher ratio by town):</label>
+            <input type="number" name="PTRATIO" step="any" placeholder="Enter PTRATIO" required>
 
-        <label>B:</label><br>
-        <input type="text" name="B"><br>
+            <label>B (1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town):</label>
+            <input type="number" name="B" step="any" placeholder="Enter B" required>
 
-        <label>LSTAT:</label><br>
-        <input type="text" name="LSTAT"><br>
+            <label>LSTAT (% lower status of the population):</label>
+            <input type="number" name="LSTAT" step="any" placeholder="Enter LSTAT" required>
 
-        <br>
-        <input type="submit" value="Predict">
+            <button type="submit" id="submitBtn">Predict</button>
+            <div id="loader" style="display:none;">Predicting...</div>
+        </form>
 
-    </form>
-
-    {% if prediction_text %}
+        {% if prediction_text %}
         <h3>{{ prediction_text }}</h3>
-    {% endif %}
+        {% endif %}
+    </div>
 
+    <script>
+        const form = document.getElementById('predictionForm');
+        const loader = document.getElementById('loader');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', () => {
+            submitBtn.style.display = 'none';
+            loader.style.display = 'block';
+        });
+    </script>
 </body>
 </html>
